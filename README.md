@@ -54,6 +54,7 @@ Task Manager App is a modern, vibrant, and responsive productivity solution buil
 
 ## 📁 File Structure
 
+```bash
 task-manager-app/
 ├── index.html # Entry point & UI
 ├── css/
@@ -65,7 +66,7 @@ task-manager-app/
 ├── libs/
 │ └── html2canvas.min.js # PNG export utility
 └── README.md # This file
-
+```
 
 ---
 
