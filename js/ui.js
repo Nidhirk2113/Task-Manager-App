@@ -1,234 +1,262 @@
-(function (global) {
-    const selectors = {
-      taskList: document.getElementById("taskList"),
-      emptyState: document.getElementById("emptyState"),
-      totalCount: document.getElementById("totalCount"),
-      completedCount: document.getElementById("completedCount"),
-      pendingCount: document.getElementById("pendingCount"),
-      progressFill: document.getElementById("progressFill"),
-      progressChart: document.getElementById("progressChart"),
-      highCount: document.getElementById("highCount"),
-      lowCount: document.getElementById("lowCount"),
-    };
-  
-    let chartInstance = null;
-  
-    function createTaskNode(task) {
-      const li = document.createElement("li");
-      li.className = "task-item";
-      li.dataset.id = task.id;
-  
-      const left = document.createElement("div");
-      left.className = "task-left";
-  
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.checked = !!task.completed;
-      checkbox.setAttribute("aria-label", "Mark task complete");
-  
-      const titleWrap = document.createElement("div");
-      titleWrap.style.flex = "1";
-  
-      const title = document.createElement("div");
-      title.className = "task-title" + (task.completed ? " done" : "");
-      title.textContent = task.title;
-      title.title = task.title;
-  
-      const meta = document.createElement("div");
-      meta.className = "task-meta";
-      const created = new Date(task.createdAt).toLocaleString();
-      meta.textContent = `${created} • ${task.priority || "medium"} priority`;
-  
-      titleWrap.appendChild(title);
-      titleWrap.appendChild(meta);
-  
-      left.appendChild(checkbox);
-      left.appendChild(titleWrap);
-  
-      const actions = document.createElement("div");
-      actions.className = "task-actions";
-  
-      const editBtn = document.createElement("button");
-      editBtn.className = "icon-btn";
-      editBtn.title = "Edit";
-      editBtn.innerHTML = "✏️";
-  
-      const deleteBtn = document.createElement("button");
-      deleteBtn.className = "icon-btn";
-      deleteBtn.title = "Delete";
-      deleteBtn.innerHTML = "🗑️";
-  
-      const priorityBadge = document.createElement("div");
-      if (task.priority === "high") {
-        priorityBadge.className = "priority-high";
-        priorityBadge.textContent = "High";
-      } else if (task.priority === "low") {
-        priorityBadge.className = "priority-low";
-        priorityBadge.textContent = "Low";
-      } else {
-        priorityBadge.className = "priority-medium";
-        priorityBadge.textContent = "Med";
+// UI Management for Task Manager
+class UIManager {
+  constructor(storageAPI) {
+      this.storage = storageAPI;
+      this.chart = null;
+      this.editingTaskId = null;
+  }
+
+  renderTasks(tasks, filter = 'all', sort = 'newest') {
+      const tasksContainer = document.getElementById('tasksList');
+      
+      // Filter tasks
+      let filteredTasks = tasks;
+      switch (filter) {
+          case 'completed':
+              filteredTasks = tasks.filter(task => task.completed);
+              break;
+          case 'pending':
+              filteredTasks = tasks.filter(task => !task.completed);
+              break;
+          default:
+              filteredTasks = tasks;
       }
-  
-      actions.appendChild(priorityBadge);
-      actions.appendChild(editBtn);
-      actions.appendChild(deleteBtn);
-  
-      li.appendChild(left);
-      li.appendChild(actions);
-  
-      // attach handlers
-      checkbox.addEventListener("change", () => {
-        global.App.toggleComplete(task.id);
-      });
-  
-      deleteBtn.addEventListener("click", () => {
-        global.App.deleteTask(task.id);
-      });
-  
-      editBtn.addEventListener("click", () => {
-        editInline(li, task);
-      });
-  
-      return li;
-    }
-  
-    function editInline(listItem, task) {
-      const titleDiv = listItem.querySelector(".task-title");
-      const meta = listItem.querySelector(".task-meta");
-      const actions = listItem.querySelector(".task-actions");
-      // Hide original
-      titleDiv.style.display = "none";
-      meta.style.display = "none";
-      actions.style.display = "none";
-  
-      // create edit UI
-      const editWrap = document.createElement("div");
-      editWrap.style.display = "flex";
-      editWrap.style.gap = "8px";
-      editWrap.style.alignItems = "center";
-      editWrap.style.width = "100%";
-  
-      const input = document.createElement("input");
-      input.type = "text";
-      input.value = task.title;
-      input.style.flex = "1";
-      input.className = "edit-input";
-  
-      const prioritySelect = document.createElement("select");
-      ["high","medium","low"].forEach(p=>{
-        const o=document.createElement("option");
-        o.value=p;o.text=o.value;
-        if(p===task.priority) o.selected=true;
-        prioritySelect.appendChild(o);
-      });
-  
-      const saveBtn = document.createElement("button");
-      saveBtn.textContent = "Save";
-      saveBtn.className = "small";
-  
-      const cancelBtn = document.createElement("button");
-      cancelBtn.textContent = "Cancel";
-      cancelBtn.className = "small";
-  
-      editWrap.appendChild(input);
-      editWrap.appendChild(prioritySelect);
-      editWrap.appendChild(saveBtn);
-      editWrap.appendChild(cancelBtn);
-  
-      listItem.querySelector(".task-left").appendChild(editWrap);
-      input.focus();
-  
-      cancelBtn.addEventListener("click", () => {
-        editWrap.remove();
-        titleDiv.style.display = "";
-        meta.style.display = "";
-        actions.style.display = "";
-      });
-  
-      saveBtn.addEventListener("click", () => {
-        const newTitle = input.value.trim();
-        const newPriority = prioritySelect.value;
-        if (!newTitle) {
-          input.focus();
+
+      // Sort tasks
+      filteredTasks = this.sortTasks(filteredTasks, sort);
+
+      // Render tasks or empty state
+      if (filteredTasks.length === 0) {
+          tasksContainer.innerHTML = `
+              <div class="empty-state">
+                  <p>${filter === 'all' ? 'No tasks yet. Add one above to get started!' : `No ${filter} tasks found.`}</p>
+              </div>
+          `;
           return;
-        }
-        global.App.editTask(task.id, { title: newTitle, priority: newPriority });
-      });
-    }
-  
-    function renderList(tasks) {
-      selectors.taskList.innerHTML = "";
-      if (!tasks || tasks.length === 0) {
-        selectors.emptyState.style.display = "block";
-        return;
       }
-      selectors.emptyState.style.display = "none";
-      tasks.forEach(t => {
-        selectors.taskList.appendChild(createTaskNode(t));
-      });
-    }
-  
-    function updateStats(tasks) {
+
+      tasksContainer.innerHTML = filteredTasks.map(task => this.renderTask(task)).join('');
+  }
+
+  renderTask(task) {
+      const isEditing = this.editingTaskId === task.id;
+      const formattedDate = new Date(task.createdAt).toLocaleDateString();
+      
+      if (isEditing) {
+          return `
+              <div class="task-item" data-task-id="${task.id}">
+                  <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} disabled>
+                  <div class="task-content">
+                      <form class="edit-form" data-task-id="${task.id}">
+                          <input type="text" value="${this.escapeHtml(task.title)}" class="edit-title" required>
+                          <select class="edit-priority">
+                              <option value="low" ${task.priority === 'low' ? 'selected' : ''}>Low</option>
+                              <option value="medium" ${task.priority === 'medium' ? 'selected' : ''}>Medium</option>
+                              <option value="high" ${task.priority === 'high' ? 'selected' : ''}>High</option>
+                          </select>
+                          <button type="submit" class="btn btn-small btn-primary">Save</button>
+                          <button type="button" class="btn btn-small btn-secondary cancel-edit">Cancel</button>
+                      </form>
+                  </div>
+              </div>
+          `;
+      }
+
+      return `
+          <div class="task-item ${task.completed ? 'completed' : ''}" data-task-id="${task.id}">
+              <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''}>
+              <div class="task-content">
+                  <div class="task-title">${this.escapeHtml(task.title)}</div>
+                  <div class="task-meta">
+                      <span class="task-priority priority-${task.priority}">${task.priority}</span>
+                      <span class="task-date">${formattedDate}</span>
+                  </div>
+              </div>
+              <div class="task-actions">
+                  <button class="edit-task" title="Edit task" aria-label="Edit task">✏️</button>
+                  <button class="delete-task" title="Delete task" aria-label="Delete task">🗑️</button>
+              </div>
+          </div>
+      `;
+  }
+
+  renderStats(tasks) {
       const total = tasks.length;
-      const completed = tasks.filter(t => t.completed).length;
+      const completed = tasks.filter(task => task.completed).length;
       const pending = total - completed;
-      const high = tasks.filter(t => t.priority === "high").length;
-      const low = tasks.filter(t => t.priority === "low").length;
-  
-      selectors.totalCount.textContent = total;
-      selectors.completedCount.textContent = completed;
-      selectors.pendingCount.textContent = pending;
-      selectors.highCount.textContent = high;
-      selectors.lowCount.textContent = low;
-  
-      const pct = total === 0 ? 0 : Math.round((completed / total) * 100);
-      selectors.progressFill.style.width = pct + "%";
-    }
-  
-    function drawChart(tasks) {
-      const completed = tasks.filter(t => t.completed).length;
+      const highPriority = tasks.filter(task => task.priority === 'high').length;
+      const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+      // Update stat numbers
+      document.getElementById('totalTasks').textContent = total;
+      document.getElementById('completedTasks').textContent = completed;
+      document.getElementById('pendingTasks').textContent = pending;
+      document.getElementById('highPriorityTasks').textContent = highPriority;
+
+      // Update progress bar
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+      progressFill.style.width = `${progress}%`;
+      progressText.textContent = `${progress}% Complete`;
+  }
+
+  renderChart(tasks) {
+      const canvas = document.getElementById('progressChart');
+      const ctx = canvas.getContext('2d');
+      
+      const completed = tasks.filter(task => task.completed).length;
       const pending = tasks.length - completed;
-  
-      const data = {
-        labels: ["Completed", "Pending"],
-        datasets: [{
-          data: [completed, pending],
-          backgroundColor: ["#10b981", "#ef4444"]
-        }]
-      };
-  
-      if (!chartInstance) {
-        chartInstance = new Chart(selectors.progressChart.getContext("2d"), {
-          type: "doughnut",
-          data,
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '60%',
-            plugins: {
-              legend: { position: 'bottom' },
-              tooltip: { enabled: true }
-            }
-          }
-        });
-      } else {
-        chartInstance.data = data;
-        chartInstance.update();
+
+      // Destroy existing chart
+      if (this.chart) {
+          this.chart.destroy();
       }
-    }
-  
-    function render(tasks) {
-      const copy = Array.isArray(tasks) ? tasks.slice() : [];
-      renderList(copy);
-      updateStats(copy);
-      drawChart(copy);
-    }
-  
-    // Expose
-    global.UI = {
-      render,
-      selectors
-    };
-  })(window);
-  
+
+      // Create new chart
+      this.chart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+              labels: ['Completed', 'Pending'],
+              datasets: [{
+                  data: [completed, pending],
+                  backgroundColor: [
+                      '#10b981', // Success green
+                      '#e2e8f0'  // Light gray
+                  ],
+                  borderWidth: 0,
+                  hoverOffset: 4
+              }]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                  legend: {
+                      position: 'bottom',
+                      labels: {
+                          padding: 20,
+                          usePointStyle: true
+                      }
+                  },
+                  tooltip: {
+                      callbacks: {
+                          label: function(context) {
+                              const label = context.label || '';
+                              const value = context.parsed;
+                              const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                              const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                              return `${label}: ${value} (${percentage}%)`;
+                          }
+                      }
+                  }
+              },
+              cutout: '60%'
+          }
+      });
+
+      // Resize chart container
+      canvas.style.height = '200px';
+  }
+
+  sortTasks(tasks, sortBy) {
+      const tasksCopy = [...tasks];
+      
+      switch (sortBy) {
+          case 'oldest':
+              return tasksCopy.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+          case 'a-z':
+              return tasksCopy.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
+          case 'priority':
+              const priorityOrder = { high: 3, medium: 2, low: 1 };
+              return tasksCopy.sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]);
+          case 'newest':
+          default:
+              return tasksCopy.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      }
+  }
+
+  showConfirmDialog(message, callback) {
+      const modal = document.getElementById('confirmModal');
+      const messageEl = document.getElementById('confirmMessage');
+      const confirmBtn = document.getElementById('confirmOk');
+      const cancelBtn = document.getElementById('confirmCancel');
+
+      messageEl.textContent = message;
+      modal.classList.add('active');
+
+      const handleConfirm = () => {
+          modal.classList.remove('active');
+          callback(true);
+          cleanup();
+      };
+
+      const handleCancel = () => {
+          modal.classList.remove('active');
+          callback(false);
+          cleanup();
+      };
+
+      const cleanup = () => {
+          confirmBtn.removeEventListener('click', handleConfirm);
+          cancelBtn.removeEventListener('click', handleCancel);
+      };
+
+      confirmBtn.addEventListener('click', handleConfirm);
+      cancelBtn.addEventListener('click', handleCancel);
+
+      // Focus management
+      confirmBtn.focus();
+  }
+
+  startEdit(taskId) {
+      this.editingTaskId = taskId;
+  }
+
+  cancelEdit() {
+      this.editingTaskId = null;
+  }
+
+  escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+  }
+
+  showToast(message, type = 'info') {
+      // Simple toast implementation
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.textContent = message;
+      toast.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          padding: 1rem 1.5rem;
+          background: var(--primary-color);
+          color: white;
+          border-radius: var(--border-radius);
+          box-shadow: var(--shadow-lg);
+          z-index: 1001;
+          opacity: 0;
+          transform: translateX(100%);
+          transition: var(--transition);
+      `;
+      
+      document.body.appendChild(toast);
+      
+      // Animate in
+      setTimeout(() => {
+          toast.style.opacity = '1';
+          toast.style.transform = 'translateX(0)';
+      }, 10);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateX(100%)';
+          setTimeout(() => {
+              document.body.removeChild(toast);
+          }, 200);
+      }, 3000);
+  }
+}

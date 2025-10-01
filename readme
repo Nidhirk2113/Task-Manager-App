@@ -1,34 +1,35 @@
-# Task Manager (LocalStorage) — Static Frontend
+# Task Manager
 
-A small interactive Task Manager built with plain HTML, CSS and Vanilla JavaScript.
-Persists tasks to `localStorage` and visualizes progress with Chart.js.
+A modern, responsive task management application built with vanilla HTML, CSS, and JavaScript. Features local storage persistence, interactive charts, and a clean user interface.
 
 ## Features
-- Add / Edit / Delete tasks
-- Toggle complete / incomplete
-- Priority: high / medium / low
-- Filter: All / Pending / Completed
-- Sort: Newest / Oldest / A→Z / Priority
-- Progress bar + Doughnut chart (Chart.js)
-- Local-only persistence (no backend)
-- Responsive and accessible UI
 
-## Run locally
-1. Clone or copy project files into a folder, e.g. `task-manager-local/`.
-2. Open `index.html` in your browser (no server required).
+- ✅ **Task Management**: Add, edit, toggle completion, and delete tasks
+- 🎯 **Priority System**: High, Medium, and Low priority levels
+- 📊 **Visual Analytics**: Progress bar and doughnut chart with Chart.js
+- 🔍 **Filtering**: View All, Pending, or Completed tasks
+- 📈 **Sorting**: Sort by Newest, Oldest, A→Z, or Priority
+- 💾 **Local Storage**: All data persists in browser localStorage
+- 📱 **Responsive Design**: Works on desktop, tablet, and mobile
+- ♿ **Accessible**: Screen reader friendly with proper ARIA labels
+- 🎨 **Modern UI**: Clean, card-based design with smooth animations
 
-## Deploy to Vercel (static)
-1. Create a GitHub repo and push the project (ensure `index.html` is at repo root).
-2. Sign in to https://vercel.com and click **New Project** → Import Git Repository.
-3. Choose repository, set framework to **Other**, root is empty, then **Deploy**.
-4. Vercel will provide a live URL (e.g. `https://your-repo.vercel.app`).
+## Technologies Used
 
-> Notes: localStorage is browser-specific. Data will not sync across devices/browsers.
+- **HTML5**: Semantic markup with accessibility features
+- **CSS3**: Modern styling with CSS Grid, Flexbox, and custom properties
+- **Vanilla JavaScript**: ES6+ features, classes, and modules
+- **Chart.js**: Interactive doughnut chart via CDN
+- **LocalStorage API**: Client-side data persistence
 
-## Customization
-- To change storage key, update `KEY` in `js/storage.js`.
-- To convert to PWA, add `manifest.json` and service worker.
-- For server-backed sync, replace StorageAPI with REST calls.
+## File Structure
 
-## License
-MIT — use for learning, demo, or portfolio work.
+ask-manager/
+├── index.html # Main HTML file
+├── css/
+│ └── style.css # All styles and responsive design
+├── js/
+│ ├── storage.js # LocalStorage API wrapper
+│ ├── ui.js # UI rendering and interactions
+│ └── app.js # Main application logic
+└── README.md # This file
