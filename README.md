@@ -100,7 +100,7 @@ Fork, improve, and open a PR—let’s build the future of productivity together
 ## 🙋‍♂️ Get in Touch
 
 - Issues & ideas: [GitHub](https://github.com/yourusername/task-manager-app)
-- Email: [your.email@example.com](nidhirk2113@gmail.com)
+- Email: [Nidhi Kulkarni](nidhirk2113@gmail.com)
 
 ---
 
