@@ -44,6 +44,13 @@ Task Manager App is a modern, vibrant, and responsive productivity solution buil
 6. Manage everything, from anywhere—no account or login required.
 
 ---
+## 🖼️ Screenshots
+
+| 📋 Task List | 👤 User Profile |
+|:-----------:|:---------------:|
+| ![Task List](https://github.com/Nidhirk2113/Task-Manager-App/blob/main/tasks-Rani%20Malik-2025-10-01.png) | ![Profile](https://github.com/Nidhirk2113/Task-Manager-App/blob/main/profile-Rani%20Malik-2025-10-01.png) |
+
+---
 
 ## 📁 File Structure
 
@@ -92,7 +99,7 @@ Fork, improve, and open a PR—let’s build the future of productivity together
 ## 🙋‍♂️ Get in Touch
 
 - Issues & ideas: [GitHub](https://github.com/yourusername/task-manager-app)
-- Email: [your.email@example.com](mailto:your.email@example.com)
+- Email: [your.email@example.com](nidhirk2113@gmail.com)
 
 ---
 
