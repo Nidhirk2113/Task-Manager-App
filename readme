@@ -1,143 +1,126 @@
 # Advanced Task Manager
 
-A comprehensive, modern task management application with user profiles, multiple themes, image downloads, and detailed task tracking. Built with vanilla HTML, CSS, and JavaScript.
+A modern, feature-rich task management app with multi-user profiles, multiple themes, task details, progress tracking, and image export capabilities. Built with **vanilla HTML, CSS, and JavaScript**, fully client-side, and deployable on **Vercel**.
 
-## ✨ New Features
+🔗 Live Demo: [https://task-manager-app-iota-wheat.vercel.app/](https://task-manager-app-iota-wheat.vercel.app/)
+
+---
+
+## ✨ Key Features
 
 ### 🎨 Multiple Color Themes
-- **6 Beautiful Themes**: Default Blue, Forest Green, Sunset Orange, Berry Purple, Ocean Teal, Rose Pink
-- **Live Theme Switching**: Change themes instantly with the dropdown selector
-- **Theme Persistence**: Your theme preference is saved automatically
+- 6 beautiful themes: Default Blue, Forest Green, Sunset Orange, Berry Purple, Ocean Teal, Rose Pink  
+- Instant theme switching with a dropdown  
+- Theme preference persists across sessions  
 
 ### 👤 User Profile System
-- **Multi-User Support**: Register and switch between different user accounts
-- **Customizable Avatars**: Choose from 8 different avatar emojis
-- **Profile Management**: Edit your name, email, and avatar anytime
-- **Separate Task Lists**: Each user has their own isolated task list
+- Multi-user support: register, switch, and manage accounts  
+- 8 customizable avatar emojis  
+- Edit profile: name, email, avatar  
+- Isolated task lists per user  
 
-### 📸 Image Download Features
-- **Download Tasks as Image**: Export your task list as a beautiful PNG report
-- **Download Profile Card**: Generate a professional profile summary image
-- **Clean, Print-Ready Layouts**: Professional formatting for sharing or printing
-
-### 📋 Enhanced Task Details
-- **Rich Task Information**: Title, description, due date, category, priority, estimated time
-- **Progress Tracking**: Set completion percentage for ongoing tasks (0-100%)
-- **7 Categories**: Work, Personal, Health, Finance, Learning, Shopping, Travel
-- **Smart Due Date Alerts**: Visual indicators for overdue tasks
+### 📋 Enhanced Task Management
+- Task details: title, description, category, priority, due date, estimated time  
+- Track completion progress (0–100%)  
+- 7 categories: Work, Personal, Health, Finance, Learning, Shopping, Travel  
+- Smart overdue alerts and visual indicators  
+- Inline editing for all task fields  
+- Toggle completion, delete tasks individually or all with confirmation  
 
 ### 🔍 Advanced Filtering & Sorting
-- **Status Filters**: All, Pending, Completed tasks
-- **Category Filters**: Filter by any of the 7 categories
-- **5 Sort Options**: Newest, Oldest, Due Date, Priority, A→Z
-- **Real-time Updates**: Filters and sorting update instantly
+- Status: All, Pending, Completed  
+- Category: filter by any of the 7 categories  
+- Sort options: Newest, Oldest, Due Date, Priority, A→Z  
+- Combined filters with real-time updates  
+
+### 📊 Analytics & Visualization
+- Progress bar with task counts and completion percentage  
+- Interactive doughnut chart using Chart.js  
+- Visual statistics: pending, completed, high/low priority, overdue tasks  
+
+### 📸 Image Export
+- Download task list as PNG  
+- Export profile card as image  
+- Print-ready, professional layouts  
+
+### 📱 Mobile & Accessibility
+- Fully responsive design for desktop, tablet, and mobile  
+- Touch-optimized interactions  
+- Keyboard shortcuts (e.g., Ctrl+N for new task, ESC to close modals)  
+- Accessibility-friendly for screen readers and keyboard navigation  
+- Offline ready; works entirely without internet  
+
+---
 
 ## 🚀 Quick Start
 
 ### Local Development
-1. Download all files to a folder
-2. Open `index.html` in any modern web browser
-3. Register a new account or login
-4. Start managing your tasks!
+1. Clone or download the repository  
+2. Open `index.html` in a modern browser  
+3. Register or log in as a user  
+4. Start managing tasks  
 
-### Vercel Deployment
-1. Push to GitHub repository
-2. Import to Vercel (no build configuration needed)
-3. Deploy instantly as a static site
-
-## 📁 File Structure
-advanced-task-manager/
-├── index.html # Main application with enhanced UI
-├── css/
-│ └── style.css # Multiple themes + responsive design
-├── js/
-│ ├── storage.js # Multi-user storage with enhanced API
-│ ├── ui.js # Advanced UI with image generation
-│ └── app.js # Main app with user management
-└── README.md # This documentation
-
-
-
-## 🎯 Features Overview
-
-### Task Management
-- ✅ **Create Tasks**: Add title, description, priority, category, due date, estimated time
-- ✏️ **Inline Editing**: Edit any task field directly in the task list
-- 📊 **Progress Tracking**: Set and update completion percentage
-- ✅ **Toggle Completion**: Mark tasks as done/pending
-- 🗑️ **Delete Tasks**: Remove individual or all tasks with confirmation
-
-### User Experience
-- 🎨 **6 Color Themes**: Switch between beautiful color schemes
-- 👤 **User Profiles**: Personal accounts with avatars and settings  
-- 📱 **Fully Responsive**: Perfect on desktop, tablet, and mobile
-- ♿ **Accessibility**: Screen reader friendly with keyboard navigation
-- 🎯 **Keyboard Shortcuts**: Ctrl+N for new task, ESC to close modals
-
-### Data & Analytics
-- 📊 **Visual Statistics**: Task counts, completion rates, overdue alerts
-- 📈 **Progress Charts**: Interactive doughnut chart with Chart.js
-- 📸 **Export Options**: Download tasks and profile as images
-- 💾 **Local Storage**: All data saved securely in your browser
-- 👥 **Multi-User**: Each user has separate, isolated data
-
-### Advanced Filtering
-- **By Status**: View all, pending, or completed tasks
-- **By Category**: Filter by Work, Personal, Health, Finance, Learning, Shopping, Travel
-- **By Date**: Smart sorting by due dates with overdue highlighting
-- **By Priority**: High, Medium, Low priority sorting
-- **Combined Filters**: Use multiple filters together
-
-
-## 🔒 Privacy & Security
-
-- **Local Storage Only**: All data stays in your browser
-- **No Server Required**: Completely client-side application
-- **User Isolation**: Each user's tasks are completely separate
-- **No Tracking**: No analytics or external data collection
-- **Export Control**: You control your data with export features
-
-## 📱 Mobile Experience
-
-- **Touch Optimized**: Large buttons and touch targets
-- **Responsive Design**: Adapts to all screen sizes
-- **Swipe Gestures**: Natural mobile interactions
-- **Offline Ready**: Works without internet connection
-- **Fast Loading**: Optimized for mobile networks
-
-## 🚀 Performance
-
-- **Lightweight**: <100KB total size including all features
-- **Fast Rendering**: Efficient DOM updates and animations
-- **Memory Efficient**: Smart component lifecycle management
-- **Battery Friendly**: Optimized animations and transitions
-
-## 📞 Support
-
-### Troubleshooting
-- **Clear Browser Data**: Reset by clearing localStorage
-- **Enable JavaScript**: Ensure JavaScript is enabled
-- **Update Browser**: Use a modern browser version
-- **Check Console**: Look for error messages in developer tools
-
-### Known Limitations
-- **Storage Limit**: Browser localStorage has ~5-10MB limit
-- **No Sync**: Data doesn't sync across devices
-- **Single Session**: No concurrent user sessions
-- **Image Quality**: Download images are limited by html2canvas
-
-## 🎉 What's New in v2.0
-
-- ✨ **6 Beautiful Themes** with instant switching
-- 👤 **Multi-User System** with profiles and avatars
-- 📸 **Image Export** for tasks and profiles  
-- 📋 **Enhanced Task Fields** with descriptions, due dates, progress
-- 🔍 **Advanced Filtering** by category and date
-- 📊 **Better Analytics** with overdue task tracking
-- 🎨 **Improved UI/UX** with better mobile experience
-- ♿ **Enhanced Accessibility** with better keyboard support
-- 🏃‍♂️ **Performance Optimizations** and smooth animations
+### Deployment on Vercel
+1. Push your repository to GitHub  
+2. Import the repo on [Vercel](https://vercel.com/)  
+3. Deploy instantly as a static site  
 
 ---
 
-**Built with ❤️ using vanilla web technologies • No frameworks • No build tools • Just pure web standards**
+## 📁 Project Structure
+advanced-task-manager/
+├── index.html # Main app with UI
+├── css/
+│ └── style.css # Multiple themes, responsive design
+├── js/
+│ ├── storage.js # Multi-user localStorage API
+│ ├── ui.js # UI rendering, image export, charts
+│ └── app.js # App logic, user management
+├── libs/
+│ └── html2canvas.min.js # Image export library
+└── README.md # Documentation
+
+
+---
+
+## 🔒 Privacy & Security
+- Fully client-side: no backend or server required  
+- Data stored in **localStorage** per user  
+- No external tracking, analytics, or data collection  
+- Export options give full control over your data  
+
+---
+
+## 🎯 Performance & Optimization
+- Lightweight: <100KB total  
+- Smooth rendering with efficient DOM updates  
+- Battery- and memory-friendly for mobile devices  
+- Fast loading, offline-capable  
+
+---
+
+## 📞 Support & Troubleshooting
+- **Reset app**: clear browser localStorage  
+- **Enable JS**: must be enabled in browser  
+- **Browser**: use modern versions (Chrome, Edge, Firefox)  
+- **Console**: check developer console for error messages  
+
+### Known Limitations
+- Browser storage limited (~5–10MB)  
+- No cloud sync; tasks remain local per device  
+- Image download resolution depends on html2canvas  
+
+---
+
+## 🎉 Highlights
+- Multi-user profiles with avatars  
+- Six beautiful color themes  
+- Export tasks and profile as images  
+- Enhanced task fields: description, due date, progress tracking  
+- Advanced filtering and sorting  
+- Improved mobile UX and accessibility  
+- Smooth animations and performance optimizations  
+
+---
+
+**Built with ❤️ using vanilla HTML, CSS & JS — no frameworks or build tools required.**
