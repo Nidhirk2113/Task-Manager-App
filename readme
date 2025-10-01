@@ -1,0 +1,34 @@
+# Task Manager (LocalStorage) — Static Frontend
+
+A small interactive Task Manager built with plain HTML, CSS and Vanilla JavaScript.
+Persists tasks to `localStorage` and visualizes progress with Chart.js.
+
+## Features
+- Add / Edit / Delete tasks
+- Toggle complete / incomplete
+- Priority: high / medium / low
+- Filter: All / Pending / Completed
+- Sort: Newest / Oldest / A→Z / Priority
+- Progress bar + Doughnut chart (Chart.js)
+- Local-only persistence (no backend)
+- Responsive and accessible UI
+
+## Run locally
+1. Clone or copy project files into a folder, e.g. `task-manager-local/`.
+2. Open `index.html` in your browser (no server required).
+
+## Deploy to Vercel (static)
+1. Create a GitHub repo and push the project (ensure `index.html` is at repo root).
+2. Sign in to https://vercel.com and click **New Project** → Import Git Repository.
+3. Choose repository, set framework to **Other**, root is empty, then **Deploy**.
+4. Vercel will provide a live URL (e.g. `https://your-repo.vercel.app`).
+
+> Notes: localStorage is browser-specific. Data will not sync across devices/browsers.
+
+## Customization
+- To change storage key, update `KEY` in `js/storage.js`.
+- To convert to PWA, add `manifest.json` and service worker.
+- For server-backed sync, replace StorageAPI with REST calls.
+
+## License
+MIT — use for learning, demo, or portfolio work.
