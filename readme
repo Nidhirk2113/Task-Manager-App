@@ -1,5 +1,5 @@
-# Advanced Task Manager
-
+# **Advanced Task Manager**
+--------------------------------------
 A modern, feature-rich task management app with multi-user profiles, multiple themes, task details, progress tracking, and image export capabilities. Built with **vanilla HTML, CSS, and JavaScript**, fully client-side, and deployable on **Vercel**.
 
 🔗 Live Demo: [https://task-manager-app-iota-wheat.vercel.app/](https://task-manager-app-iota-wheat.vercel.app/)
