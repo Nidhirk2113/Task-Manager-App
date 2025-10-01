@@ -6,8 +6,7 @@ Task Manager App is a modern, responsive, and fully-featured productivity tool b
 ⚡ Live Demo
 __________________________________________________________________________________________________________________
 👉 Experience Productivity, Simplified:
-Try Task Manager App Online {https://task-manager-app-iota-wheat.vercel.app/}
- 🚀
+Try ![Task Manager App](https://task-manager-app-iota-wheat.vercel.app/) 🚀
 
 🚀 Key Features
 ______________________________________________________________________________________________________________________
@@ -36,7 +35,7 @@ html2canvas	Export task boards as PNG images
 
 📦 How It Works
 _________________________________________________________________________________________________
-Open the live demo{https://task-manager-app-iota-wheat.vercel.app/}
+Open the ![live demo](https://task-manager-app-iota-wheat.vercel.app/)
  or index.html locally.
 
 Register a profile with your name, email, and avatar.
@@ -54,7 +53,7 @@ ________________________________________________________________________________
 
 | 📋 Task List | 👤 User Profile |
 |:-----------:|:---------------:|
-| ![Task List](tasks-Rani%20Malik-2025-10-01.png) | ![Profile](profile-Rani%20Malik-2025-10-01.png) |
+| ![Task List](https://github.com/Nidhirk2113/Task-Manager-App/blob/main/tasks-Rani%20Malik-2025-10-01.png) | ![Profile](https://github.com/Nidhirk2113/Task-Manager-App/blob/main/profile-Rani%20Malik-2025-10-01.png) |
 
 	
 
@@ -109,3 +108,4 @@ Email: nidhirk2113@gmail.com
 
 
 Built with ❤️ using vanilla web technologies. No frameworks, no tracking.
+
